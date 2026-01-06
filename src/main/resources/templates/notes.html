@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Заметки</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header class="header">
+    <h1>Мои заметки</h1>
+</header>
+
+<main class="container">
+
+    <div class="notes-grid">
+        <div class="note-card" th:each="note : ${notes}"
+            th:data-id="${note.id}"
+            th:data-title="${note.title}"
+            th:data-content="${note.payload}">
+
+            <h2 th:text="${note.title}">Заголовок</h2>
+            <p th:text="${note.payload}">Содержимое</p>
+        </div>
+    </div>
+
+    <!-- ПАГИНАЦИЯ -->
+    <div class="pagination">
+
+        <!-- Назад -->
+        <a
+                th:if="${!isFirst}"
+                th:href="@{/{userId}/notes(userId=${userId}, page=${page - 1}, pageSize=${pageSize})}"
+                class="page-btn">
+            ← Назад
+        </a>
+
+        <span class="page-info">
+            Страница <span th:text="${page + 1}">1</span>
+        </span>
+
+        <!-- Вперёд -->
+        <a
+                th:if="${!isLast}"
+                th:href="@{/{userId}/notes(userId=${userId}, page=${page + 1}, pageSize=${pageSize})}"
+                class="page-btn">
+            Вперёд →
+        </a>
+
+    </div>
+
+    <!-- КНОПКА ДОБАВЛЕНИЯ -->
+    <button class="add-note-btn" onclick="toggleForm()">+</button>
+
+    <!-- ФОРМА СОЗДАНИЯ -->
+    <div id="noteForm" class="note-form hidden">
+        <form th:action="@{/{userId}/notes(userId=${userId})}" method="post">
+            <h3>Новая заметка</h3>
+
+            <input type="hidden"
+                   th:name="${_csrf.parameterName}"
+                   th:value="${_csrf.token}">
+
+            <input type="text"
+                   name="title"
+                   placeholder="Название"
+                   required />
+
+            <textarea name="payload"
+                      placeholder="Содержимое"
+                      rows="5"
+                      required></textarea>
+
+            <div class="form-actions">
+                <button type="submit">Создать</button>
+                <button type="button" onclick="toggleForm()">Отмена</button>
+            </div>
+        </form>
+    </div>
+
+    <!-- VIEW MODAL -->
+    <div id="noteModal" class="modal hidden">
+        <div class="modal-content">
+
+            <!-- VIEW MODE -->
+            <div id="viewMode" class="view-mode">
+                <h2 id="viewTitle" class="note-title"></h2>
+                <p id="viewContent" class="note-content"></p>
+
+                <div class="note-actions">
+                    <button id="editBtn" class="btn primary">
+                        ✏️ Редактировать
+                    </button>
+
+                    <form id="deleteForm" method="post">
+                        <input type="hidden" name="_method" value="delete">
+                        <input type="hidden"
+                               th:name="${_csrf.parameterName}"
+                               th:value="${_csrf.token}">
+                        <button type="submit" class="btn danger">
+                            🗑 Удалить
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- EDIT MODE -->
+            <div id="editMode" class="edit-mode hidden">
+                <form id="editForm" method="post">
+
+                    <input type="hidden" name="_method" value="put">
+                    <input type="hidden" name="id" id="editId">
+                    <input type="hidden"
+                           th:name="${_csrf.parameterName}"
+                           th:value="${_csrf.token}">
+
+                    <div class="field">
+                        <label>Название</label>
+                        <input type="text" name="title" id="editTitle" required>
+                    </div>
+
+                    <div class="field">
+                        <label>Содержимое</label>
+                        <textarea name="payload"
+                                  id="editContent"
+                                  rows="6"
+                                  required></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn primary">
+                            💾 Сохранить
+                        </button>
+                        <button type="button" id="cancelEdit" class="btn ghost">
+                            Отмена
+                        </button>
+                    </div>
+
+                </form>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+</main>
+
+
+<script>
+    const USER_ID = "[[${userId}]]";
+</script>
+<script th:src="@{/js/script.js}"></script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: yc
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: ${POSTGRES_USER:postgres}
+    password: ${POSTGRES_PASS:postgres}
+    url: ${POSTGRES_URL:jdbc:postgresql://localhost:5432/yc}
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        default_schema: public

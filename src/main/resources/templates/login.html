@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Вход</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="auth-page">
+    <div class="auth-card">
+
+        <h1>Вход</h1>
+
+        <form th:action="@{/login}" method="post">
+
+            <div class="field">
+                <label>Логин</label>
+                <input type="text" name="username" required>
+            </div>
+
+            <div class="field">
+                <label>Пароль</label>
+                <input type="password" name="password" required>
+            </div>
+
+            <div class="auth-actions">
+                <button type="submit" class="btn primary">
+                    Войти
+                </button>
+            </div>
+
+        </form>
+
+        <div class="auth-footer">
+            Нет аккаунта?
+            <a th:href="@{/registration}">Зарегистрироваться</a>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

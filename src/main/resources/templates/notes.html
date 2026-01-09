@@ -9,6 +9,14 @@
 
 <header class="header">
     <h1>Мои заметки</h1>
+    <form th:action="@{/logout}" method="post" class="logout-form">
+        <input type="hidden"
+               th:name="${_csrf.parameterName}"
+               th:value="${_csrf.token}">
+        <button type="submit" class="btn ghost logout-btn">
+            🚪 Выйти
+        </button>
+    </form>
 </header>
 
 <main class="container">

@@ -31,7 +31,15 @@ class SecurityConfig {
             .formLogin {
                 it.loginPage("/login")
                 it.successHandler(successHandler)
-                it.permitAll()}
+                it.permitAll()
+            }
+            .logout {
+                it.logoutUrl("/logout")
+                it.logoutSuccessUrl("/login")
+                it.invalidateHttpSession(true)
+                it.deleteCookies("JSESSIONID")
+            }
+
             .authenticationManager(manager)
             .build()
     }

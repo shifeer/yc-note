@@ -35,6 +35,8 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-security")
 
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+
 	compileOnly("org.projectlombok:lombok")
 	runtimeOnly("org.postgresql:postgresql")
 	annotationProcessor("org.projectlombok:lombok")

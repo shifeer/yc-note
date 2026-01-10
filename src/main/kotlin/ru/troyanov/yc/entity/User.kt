@@ -15,7 +15,7 @@ import java.util.UUID
 class User (
     @Id
     val id : UUID = UUID.randomUUID(),
-    @Column(name = "user_name")
+    @Column(name = "user_name", unique = true, nullable = false)
     var username : String,
     var password : String,
     @OneToMany(fetch = FetchType.LAZY, cascade = [CascadeType.ALL], mappedBy = "user")
